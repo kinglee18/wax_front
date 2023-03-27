@@ -1,21 +1,21 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import {Store} from "@ngrx/store";
+import {Product} from "../../interfaces/product";
+import {CartState} from "../reducers/cart.reducer";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.sass']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
+  constructor(private store: Store<{ cart: CartState }>) { }
 
-  @Output() toggleSidenavEvent = new EventEmitter();
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  toggleSidenav() {
-    this.toggleSidenavEvent.emit();
-  }
-
+  public cartItems$= this.store.select(state => {
+    return state.cart.products
+  });
+  cartProductsLength$ = this.cartItems$.pipe(
+    map(array => array.length)
+  );
 }

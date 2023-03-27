@@ -23,6 +23,9 @@ import { CardProductComponent } from './card-product/card-product.component';
 import {MatCardModule} from "@angular/material/card";
 import {HttpClientModule} from "@angular/common/http";
 import {MatInputModule} from "@angular/material/input";
+import {StoreModule} from "@ngrx/store";
+import {cartReducer} from "./reducers/cart.reducer";
+import {MatBadgeModule} from "@angular/material/badge";
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,12 +55,14 @@ import {MatInputModule} from "@angular/material/input";
     HttpClientModule,
     MatFormFieldModule,
     MatInputModule,
+    MatBadgeModule,
     RouterModule.forRoot([
       {path: '', component: HomeComponent},
       {path: 'detail', component: ProductDetailComponent},
       {path: 'checkout', component: CheckoutComponent},
     ]),
     MatCardModule,
+    StoreModule.forRoot({ cart: cartReducer })
   ],
   providers: [],
   bootstrap: [AppComponent]
